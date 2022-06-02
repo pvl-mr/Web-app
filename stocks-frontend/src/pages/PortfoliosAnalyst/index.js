@@ -4,21 +4,15 @@ import {Form, Modal} from 'react-bootstrap';
 import {
     Button,
     Wrapper,
-    WrapperActions,
     Card,
     Actions,
     BlockActions,
     EmptyButton,
-    DescriptionStatus,
-    Status, NoData
+    NoData
 } from "./styles";
 import {
-    createPortfolioAPI,
-    deletePortfolioAPI,
     getPortfolioAnalystAPI,
     getPortfolioAPI, sendMessageAPI,
-    sendPortfolioAPI,
-    updatePortfolioAPI
 } from "../../api";
 import {numWord} from "../../helpers/numWord";
 import {generatePath, useNavigate} from "react-router-dom";

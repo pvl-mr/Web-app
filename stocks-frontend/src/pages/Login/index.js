@@ -15,11 +15,12 @@ function Login() {
         e.preventDefault();
         try {
             const res = await LoginAPI(email, password);
-            const { user_id, status } = res?.data;
+            const { user_id, status, token } = res?.data;
             if (user_id != null) {
                 localStorage.setItem('userId', user_id);
                 localStorage.setItem('status', status);
                 localStorage.setItem('userData', JSON.stringify(res?.data?.user));
+                localStorage.setItem('token', token);
                 navigate(paths.MAIN)
             }
         } catch (err) {

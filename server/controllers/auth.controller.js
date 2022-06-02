@@ -37,6 +37,7 @@ class AuthController {
                         status: "client",
                         user_id: candidate.rows[0].id,
                         user: candidate.rows[0],
+                        token: token
                     })
                 } else {
                     res.status(401).json({

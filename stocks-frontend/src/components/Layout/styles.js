@@ -37,3 +37,11 @@ export const NavLink = styled(Link)`
     `}
   }
 `;
+
+export const BlockCurrency = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+export const Currency = styled.div`
+    color: #fff
+`;

@@ -5,8 +5,17 @@ import { BASE_URL } from "../constants/endpoints";
 
 const Axios = axios.create({
     baseURL: BASE_URL,
-    headers: {'Bearer': localStorage.getItem('token')}
+    headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}
 });
+
+Axios.interceptors.response.use((response) => response, (error) => {
+    const status = error?.response?.status;
+    if (status === 401) {
+        localStorage.clear();
+        window.location.reload();
+    }
+    throw error;
+})
 
 export const LoginAPI = async (email, pass) => {
     try {

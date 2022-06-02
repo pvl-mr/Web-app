@@ -30,6 +30,30 @@ class StockController {
         const stock = await db.query(`DELETE from stock where id = $1 RETURNING *`, [id])
         stock.rows.length > 0 ? res.json(stock.rows[0]) : res.status(400).json("Stock doesn't exist or already deleted");
     }
+
+    async putStocks(req, res) {
+        var request = require('request');
+        // var symbols = ['RE', 'IVZ', 'GOLD', 'CCJ', 'MGA','NTR', 'PAAS','SHOP', 'WPM', 'CB', 'RIG', 'TEL', 'FTI', 'NLSN', 'ICLR', 'ACN', 'ETN', 'PRTA', 'ALLE','STE', 'TT', 'STX', 'MDT', 'CHKP', 'FVRR', 'MNDY', 'NVCR', 'FTCH', 'AMBA', 'BYSI', 'NU', 'STNE', 'XP', 'RCL', 'SPOT', 'AER', 'LYB', 'NXPI', 'AFMD', 'RACE', 'QGEN', 'AAON', 'AIR', 'AGCO', 'ACMR', 'AGNC', 'AES', 'AMN', 'ANIP', 'T', 'ATNI', 'AAN', 'ABT', 'ABBV', 'ABMD', 'ACIW', 'ATVI', 'AYI', 'ADUS', 'ADBE']
+        var symbols = ['RE']
+        symbols.forEach((item, index) => {
+            var url = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${item}&apikey=TXQHRTAANYRF47MR`;
+            request.get({
+                url: url,
+                json: true,
+                headers: {'User-Agent': 'request'}
+            }, (err, res, data) => {
+                if (err) {
+                    console.log('Error:', err);
+                } else if (res.statusCode !== 200) {
+                    console.log('Status:', res.statusCode);
+                } else {
+                    db.query(`INSERT INTO stock (stockName, stockDesc, price) values ($1, $2, $3) RETURNING * `, [data.Name, data.Description, data.AnalystTargetPrice])
+                    // db.query(`INSERT INTO stock (id, stockName, stockDesc, price) values ($1, $2, $3, $4) RETURNING * `, [10 + index, data.Name, data.Description, data.AnalystTargetPrice])
+                }
+            });
+        })
+
+    }
 }
 
 module.exports = new StockController()

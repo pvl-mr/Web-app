@@ -1,12 +1,33 @@
 import { useLocation } from "react-router-dom";
 import {Navbar, Container, Nav} from "react-bootstrap";
 
-import {Content, FooterWrapper, HeaderWrapper, NavLink, Wrapper} from "./styles";
+import {BlockCurrency, Content, Currency, FooterWrapper, HeaderWrapper, NavLink, Wrapper} from "./styles";
 import paths from "../../constants/paths";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 function Layout({children}) {
+    const [currencyUSD, setCurrencyUSD] = useState(null);
+    const [currencyEUR, setCurrencyEUR] = useState(null);
     const { pathname } = useLocation();
     const status = localStorage.getItem('status');
+    useEffect(() => {
+        fetchData('USD');
+        fetchData('EUR');
+    }, []);
+    const fetchData = async (currency) => {
+        try {
+            const data = await axios.get(`https://api.exchangerate-api.com/v4/latest/${currency}`);
+            const rates = data.data.rates;
+            if (currency === 'USD') {
+                setCurrencyUSD(rates['RUB'])
+            } else {
+                setCurrencyEUR(rates['RUB'])
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    };
     return (
         <Wrapper>
             <HeaderWrapper>
@@ -28,6 +49,10 @@ function Layout({children}) {
                                 </>
                             )}
                         </Nav>
+                        <BlockCurrency>
+                            <Currency>USD/RUB: {currencyUSD}</Currency>
+                            <Currency>EUR/RUB: {currencyEUR}</Currency>
+                        </BlockCurrency>
                     </Container>
                 </Navbar>
             </HeaderWrapper>

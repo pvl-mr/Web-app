@@ -55,3 +55,19 @@ create TABLE portfolio_bond(
     FOREIGN KEY(portfolioId) REFERENCES portfolio (id),
     FOREIGN KEY(bondId) REFERENCES bond (id)
 );
+
+ALTER TABLE portfolio_stock
+DROP CONSTRAINT portfolio_stock_portfolioid_fkey
+
+ALTER TABLE portfolio_stock
+ADD CONSTRAINT portfolio_stock_portfolioid_fkey FOREIGN KEY (portfolioid)
+REFERENCES public.portfolio (id)
+ON DELETE CASCADE
+
+ALTER TABLE portfolio_bond
+DROP CONSTRAINT portfolio_bond_portfolioid_fkey;
+
+ALTER TABLE portfolio_bond
+ADD CONSTRAINT portfolio_bond_portfolioid_fkey FOREIGN KEY (portfolioid)
+REFERENCES public.portfolio (id)
+ON DELETE CASCADE
