@@ -106,7 +106,7 @@ function Bonds() {
                             onChange={(e) => setPortfolioId(e.target.value)}
                         >
                             <option value={null} />
-                            {portfolios.map(({id, goal, years}) => (
+                            {portfolios?.map(({id, goal, years}) => (
                                 <option key={id} value={id}>{`${goal} - ${years} лет`}</option>
                             ))}
                         </Form.Select>

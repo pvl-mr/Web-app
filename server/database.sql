@@ -12,7 +12,7 @@ create TABLE client(
     firstName VARCHAR(255) NOT NULL,
     lastName VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    pass VARCHAR(255) NOT NULL,
+    pass VARCHAR(255) NOT NULL
 );
 
 create TABLE stock(

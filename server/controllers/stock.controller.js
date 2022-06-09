@@ -33,8 +33,7 @@ class StockController {
 
     async putStocks(req, res) {
         var request = require('request');
-        // var symbols = ['RE', 'IVZ', 'GOLD', 'CCJ', 'MGA','NTR', 'PAAS','SHOP', 'WPM', 'CB', 'RIG', 'TEL', 'FTI', 'NLSN', 'ICLR', 'ACN', 'ETN', 'PRTA', 'ALLE','STE', 'TT', 'STX', 'MDT', 'CHKP', 'FVRR', 'MNDY', 'NVCR', 'FTCH', 'AMBA', 'BYSI', 'NU', 'STNE', 'XP', 'RCL', 'SPOT', 'AER', 'LYB', 'NXPI', 'AFMD', 'RACE', 'QGEN', 'AAON', 'AIR', 'AGCO', 'ACMR', 'AGNC', 'AES', 'AMN', 'ANIP', 'T', 'ATNI', 'AAN', 'ABT', 'ABBV', 'ABMD', 'ACIW', 'ATVI', 'AYI', 'ADUS', 'ADBE']
-        var symbols = ['RE']
+        var symbols = ['RE', 'IVZ', 'GOLD', 'CCJ', 'MGA','NTR', 'PAAS','SHOP', 'WPM', 'CB', 'RIG', 'TEL', 'FTI', 'NLSN', 'ICLR', 'ACN', 'ETN', 'PRTA', 'ALLE','STE', 'TT', 'STX', 'MDT', 'CHKP', 'FVRR', 'MNDY', 'NVCR', 'FTCH', 'AMBA', 'BYSI', 'NU', 'STNE', 'XP', 'RCL', 'SPOT', 'AER', 'LYB', 'NXPI', 'AFMD', 'RACE', 'QGEN', 'AAON', 'AIR', 'AGCO', 'ACMR', 'AGNC', 'AES', 'AMN', 'ANIP', 'T', 'ATNI', 'AAN', 'ABT', 'ABBV', 'ABMD', 'ACIW', 'ATVI', 'AYI', 'ADUS', 'ADBE']
         symbols.forEach((item, index) => {
             var url = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${item}&apikey=TXQHRTAANYRF47MR`;
             request.get({
@@ -48,7 +47,6 @@ class StockController {
                     console.log('Status:', res.statusCode);
                 } else {
                     db.query(`INSERT INTO stock (stockName, stockDesc, price) values ($1, $2, $3) RETURNING * `, [data.Name, data.Description, data.AnalystTargetPrice])
-                    // db.query(`INSERT INTO stock (id, stockName, stockDesc, price) values ($1, $2, $3, $4) RETURNING * `, [10 + index, data.Name, data.Description, data.AnalystTargetPrice])
                 }
             });
         })

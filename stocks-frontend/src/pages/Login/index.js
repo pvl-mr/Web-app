@@ -4,7 +4,7 @@ import {Form, Button} from "react-bootstrap";
 
 import {Actions, Content, CustomLink, Title, Wrapper} from "./styles";
 import paths from "../../constants/paths";
-import {LoginAPI} from "../../api";
+import {LoginAPI, setBearerToken} from "../../api";
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -21,7 +21,7 @@ function Login() {
                 localStorage.setItem('status', status);
                 localStorage.setItem('userData', JSON.stringify(res?.data?.user));
                 localStorage.setItem('token', token);
-                navigate(paths.MAIN)
+                window.location.href = paths.MAIN;
             }
         } catch (err) {
             console.log(err)
@@ -42,7 +42,7 @@ function Login() {
                         <Form.Control type="password" placeholder="Пароль" onChange={(e) => setPassword(e.target.value)} />
                     </Form.Group>
                     <Actions>
-                        <Button variant="primary" type="submit" disabled={!email || !password}>
+                        <Button variant="primary" type="submit" disabled={!email || !password || password?.length < 5}>
                             Войти
                         </Button>
                         <CustomLink to={paths.REGISTER}>

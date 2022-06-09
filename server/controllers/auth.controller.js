@@ -4,6 +4,12 @@ const db = require('../db')
 const config = require('../config')
 
 class AuthController {
+
+    say(req, res) {
+        res.status(200).json({
+            message: "Hello  world!"
+        })
+    }
     async getPersonClient(req, res) {
         const id = req.params.id;
         let candidate = await db.query('SELECT * FROM CLIENT WHERE id = $1', [id])
@@ -24,7 +30,6 @@ class AuthController {
 
     async login(req, res) {
         const {email, pass } = req.body
-        console.log(req.body)
         let candidate = await db.query('SELECT * FROM CLIENT WHERE email = $1', [email])
         if (candidate.rowCount > 0) {
             const isMatch = (pass === candidate.rows[0].pass)
@@ -56,6 +61,7 @@ class AuthController {
                         status: "analyst",
                         user_id: candidate.rows[0].id,
                         user: candidate.rows[0],
+                        token: token
                     })
                 } else {
                     res.status(401).json({
@@ -75,20 +81,17 @@ class AuthController {
         const {first_name, last_name, email, pass, code} = req.body
         let candidate = await db.query('SELECT * FROM CLIENT WHERE email = $1', [email])
         if (candidate.rowCount == 0) candidate = await db.query('SELECT * FROM ANALYST WHERE email = $1', [email])
-        console.log()
         if (candidate.rowCount > 0) {
             res.status(409).json({
                 message: 'Пользователь с таким email уже зарегистрирован'
             })
         } else {
             let newUser;
-            console.log(code);
             if (code.length > 0) {
-                console.log(email)
                 newUser = await db.query(`INSERT INTO ANALYST (firstName, lastName, email, pass, code) values ($1, $2, $3, $4, $5) RETURNING * `, [first_name, last_name, email, pass, code])
             } else {
                 newUser = await db.query(`INSERT INTO CLIENT (firstName, lastName, email, pass) values ($1, $2, $3, $4) RETURNING * `, [first_name, last_name, email, pass])
-            }             
+            }
             newUser.rows.length > 0 ? res.status(201).json({status: "ok"}) : res.status(400).json("Error");
         }
     }

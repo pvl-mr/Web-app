@@ -17,6 +17,7 @@ import {numWord} from "../../helpers/numWord";
 import {useNavigate, generatePath} from "react-router-dom";
 import paths from "../../constants/paths";
 import {NotificationManager} from "react-notifications";
+import {NoData} from "../PortfoliosAnalyst/styles";
 
 function Portfolios() {
     const [portfolios, setPortfolios] = useState([]);
@@ -26,6 +27,7 @@ function Portfolios() {
     const [goal, setGoal] = useState('');
     const [month, setMonth] = useState('');
     const [message, setMessage] = useState('');
+    const [loading, setLoading] = useState(true);
     let navigate = useNavigate();
 
     useEffect(() => {
@@ -66,11 +68,14 @@ function Portfolios() {
     };
 
     const getPortfolio = async () => {
+        setLoading(true);
         try {
             const data = await getPortfolioAPI();
             setPortfolios(data?.data);
         } catch (err) {
             console.log('error: ', err);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -122,35 +127,44 @@ function Portfolios() {
 
     return (
         <Wrapper>
-            <DescriptionStatus>
-                <Status color={'rgba(255,0,0,0.7)'} />
-                не отправлено
-                <Status color={'rgba(255,165,0,0.7)'} />
-                отправлено
-                <Status color={'rgba(0,255,0,0.7)'} />
-                анализ получен
-            </DescriptionStatus>
-            {portfolios.map((portfolio) => (
-                <Card key={portfolio.id} className="shadow bg-white rounded" colorMark={getMarkColor(portfolio.sendstatus, portfolio.message)}>
-                    <Card.Body>
-                        <Card.Title>{portfolio.goal}</Card.Title>
-                        <Card.Subtitle className="mb-2 text-muted">Срок: {portfolio.years} {numWord(Number(portfolio.years), ['месяц', 'месяца', 'месяцев'])}</Card.Subtitle>
-                        <BlockActions>
-                            <Actions>
-                                <Button variant="outline-danger" onClick={() => deletePortfolio(portfolio.id)}>Удалить</Button>
-                                <Button onClick={() => handleUpdate(portfolio)}>Изменить</Button>
-                                <EmptyButton onClick={() => showDetails(portfolio.id)}>Подробнее</EmptyButton>
-                            </Actions>
-                            {!portfolio.sendstatus && (
-                                <EmptyButton onClick={() => sendPortfolio(portfolio.id)}>Отправить на анализ</EmptyButton>
-                            )}
-                            {portfolio.sendstatus === 'send' && !!portfolio.message && (
-                                <EmptyButton onClick={() => checkResult(portfolio.message)}>Просмотреть результат анализа</EmptyButton>
-                            )}
-                        </BlockActions>
-                    </Card.Body>
-                </Card>
-            ))}
+            {!loading && portfolios?.length === 0 ? (
+                <WrapperActions className='shadow bg-white rounded'>
+                    <Button variant="outline-primary" onClick={handleAdd}>Добавить</Button>
+                    <Button variant="outline-success">Отчёт</Button>
+                </WrapperActions>
+            ) : (
+                <>
+                    <DescriptionStatus>
+                        <Status color={'rgba(255,0,0,0.7)'} />
+                        не отправлено
+                        <Status color={'rgba(255,165,0,0.7)'} />
+                        отправлено
+                        <Status color={'rgba(0,255,0,0.7)'} />
+                        анализ получен
+                    </DescriptionStatus>
+                    {portfolios?.map((portfolio) => (
+                        <Card key={portfolio.id} className="shadow bg-white rounded" colorMark={getMarkColor(portfolio.sendstatus, portfolio.message)}>
+                            <Card.Body>
+                                <Card.Title>{portfolio.goal}</Card.Title>
+                                <Card.Subtitle className="mb-2 text-muted">Срок: {portfolio.years} {numWord(Number(portfolio.years), ['месяц', 'месяца', 'месяцев'])}</Card.Subtitle>
+                                <BlockActions>
+                                    <Actions>
+                                        <Button variant="outline-danger" onClick={() => deletePortfolio(portfolio.id)}>Удалить</Button>
+                                        <Button onClick={() => handleUpdate(portfolio)}>Изменить</Button>
+                                        <EmptyButton onClick={() => showDetails(portfolio.id)}>Подробнее</EmptyButton>
+                                    </Actions>
+                                    {!portfolio.sendstatus && (
+                                        <EmptyButton onClick={() => sendPortfolio(portfolio.id)}>Отправить на анализ</EmptyButton>
+                                    )}
+                                    {portfolio.sendstatus === 'send' && !!portfolio.message && (
+                                        <EmptyButton onClick={() => checkResult(portfolio.message)}>Просмотреть результат анализа</EmptyButton>
+                                    )}
+                                </BlockActions>
+                            </Card.Body>
+                        </Card>
+                    ))}
+                </>
+            )}
             <WrapperActions className='shadow bg-white rounded'>
                 <Button variant="outline-primary" onClick={handleAdd}>Добавить</Button>
                 <Button variant="outline-success">Отчёт</Button>

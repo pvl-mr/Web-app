@@ -1,10 +1,7 @@
 const db = require('../db')
 class PortfolioBondController {
     async addBondToPortfolio(req, res) {
-        console.log('-----------------')
         const {count, bond_id, portfolio_id} = req.body
-        console.log("bond_id", req.body.bond_id)
-        console.log("req.body", req.body)
         let newPortfolioBond = await db.query(`SELECT * FROM portfolio_bond where (bondid = $1 and portfolioid = $2)`, [bond_id, portfolio_id])
         let isNew = newPortfolioBond.rows.length > 0 ? 0 : 1
         if (isNew) {

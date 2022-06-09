@@ -13,7 +13,7 @@ export const Content = styled.div`
     background: #f0f0f0;
     padding: 40px;
     border-radius: 18px;
-    margin-bottom: 100px;
+    margin-bottom: 10px;
 `;
 
 export const Title = styled.h2`

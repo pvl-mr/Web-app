@@ -1,18 +1,32 @@
 import styled, {css} from 'styled-components';
 import {Card as DefaultCard} from "react-bootstrap";
 
-export const Wrapper = styled.div``;
+export const Wrapper = styled.div`
+    
+`;
 
-export const Back = styled.div`
-  font-weight: bold;
-  margin-bottom: 10px;
+export const WrapperRisc = styled.div`
   display: flex;
-  align-items: center;
-  cursor: pointer;
-  
-  svg {
-    margin-right: 5px;
-  }
+  gap: 44px;
+  align-items: start;
+  justify-content: space-around;
+  margin: 24px 0;
+`;
+
+export const BlockInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 24px;
+`;
+
+export const Description = styled.p`
+  margin: 0;
+`;
+
+export const WrapperChart = styled.div`
+  width: 200px;
+  height: 200px;
 `;
 
 export const TableInfo = styled.table`

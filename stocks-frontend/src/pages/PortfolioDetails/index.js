@@ -2,6 +2,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import { BsArrowLeft } from "react-icons/bs";
 import {Form, Modal} from "react-bootstrap";
+import {NotificationManager} from "react-notifications";
 import {
     InfoBlock,
     Title,
@@ -17,15 +18,15 @@ import {
     Bold, Back, Actions
 } from "./styles";
 import paths from "../../constants/paths";
+import MathAnalyses from "./MathAnalyses";
 import {
-    deletePortfolioAPI,
+    deletePortfolioAPI, getMathAnalysesAPI,
     getPortfolioBondsDetailsAPI,
     getPortfolioDetailsAPI,
     getPortfolioStocksAPI, sendMessageAPI, sendPortfolioAPI, updatePortfolioAPI
 } from "../../api";
 import {numWord} from "../../helpers/numWord";
 import {Button} from "../Portfolios/styles";
-import {NotificationManager} from "react-notifications";
 
 function PortfolioDetails() {
     const navigate = useNavigate();
@@ -186,14 +187,15 @@ function PortfolioDetails() {
                 </Actions>
             )}
             {details?.message && <InfoBlock><Bold>Результаты анализа:</Bold> {details?.message}</InfoBlock>}
+           <MathAnalyses stocks={stocks} bonds={bonds} />
 
             <Title>Акции</Title>
             <WrapperStocks>
-                {stocks.map(({stockname, stockdesc, price, id}) => (
+                {stocks.map(({stockname, stockdesc, price, id, count}) => (
                     <Card key={id} className="shadow bg-white rounded" colorMark={getMarkColor(price)}>
                         <Card.Body>
                             <Card.Title>{stockname}</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">${price}</Card.Subtitle>
+                            <Card.Subtitle className="mb-2 text-muted">{count} шт. по ${price}</Card.Subtitle>
                             <Card.Text>
                                 {stockdesc}
                             </Card.Text>
@@ -203,11 +205,11 @@ function PortfolioDetails() {
             </WrapperStocks>
             <Title>Облигации</Title>
             <WrapperBonds>
-                {bonds.map(({bondname, bonddesc, price, id}) => (
+                {bonds.map(({bondname, bonddesc, price, id, count}) => (
                     <Card key={id} className="shadow bg-white rounded" colorMark={getMarkColor(price)}>
                         <Card.Body>
                             <Card.Title>{bondname}</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">${price}</Card.Subtitle>
+                            <Card.Subtitle className="mb-2 text-muted">{count} шт. по ${price}</Card.Subtitle>
                             <Card.Text>
                                 {bonddesc}
                             </Card.Text>

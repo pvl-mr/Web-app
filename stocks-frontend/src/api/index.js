@@ -10,11 +10,12 @@ const Axios = axios.create({
 
 Axios.interceptors.response.use((response) => response, (error) => {
     const status = error?.response?.status;
+    console.log('status', error);
     if (status === 401) {
         localStorage.clear();
         window.location.reload();
     }
-    throw error;
+    return error
 })
 
 export const LoginAPI = async (email, pass) => {
@@ -40,7 +41,7 @@ export const RegisterAPI = async (firstName, lastName, email, password, code) =>
         });
     } catch (error) {
         console.log('error: ', error)
-        NotificationManager.error('Ошибка регистрации');
+        NotificationManager.error(error.message);
     }
 }
 
@@ -61,8 +62,9 @@ export const getBondsAPI = async () => {
 }
 
 export const getPortfolioAPI = async () => {
+    const client_id = localStorage.getItem('userId');
     try {
-        return await Axios.get(`/portfolios`);
+        return await Axios.get(`/portfolios/${client_id}`);
     } catch (error) {
         console.log('error: ', error)
     }
@@ -179,6 +181,14 @@ export const getPortfolioStocksAPI = async (portfolioId) => {
 export const getPortfolioBondsDetailsAPI = async (portfolioId) => {
     try {
         return await Axios.get(`/portfolioBonds/${portfolioId}`);
+    } catch (error) {
+        console.log('error: ', error)
+    }
+}
+
+export const getMathAnalysesAPI = async (portfolioId) => {
+    try {
+        return await Axios.get(`/getAnalysis/${portfolioId}`);
     } catch (error) {
         console.log('error: ', error)
     }

@@ -121,7 +121,7 @@ function PortfoliosAnalyst() {
 
     return (
         <Wrapper>
-            {portfolios.map((portfolio) => (
+            {portfolios?.map((portfolio) => (
                 <Card key={portfolio.id} className="shadow bg-white rounded" colorMark={getMarkColor(portfolio.sendstatus, portfolio.message)}>
                     <Card.Body>
                         <Card.Title>{portfolio.goal}</Card.Title>

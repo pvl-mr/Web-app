@@ -14,7 +14,7 @@ const app = express()
 const cors = require('cors')
 
 app.use(cors({
-    origin: '*'
+    origin: 'https://investan-app.herokuapp.com'
 }))
 
 app.use(passport.initialize())
