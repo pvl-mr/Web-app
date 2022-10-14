@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
+import {Button} from "react-bootstrap";
 
 export const Wrapper = styled.div`
     display: flex;
@@ -14,10 +15,17 @@ export const Content = styled.div`
     padding: 40px;
     border-radius: 18px;
     margin-bottom: 100px;
+
+  @media (max-width: 768px) {
+    min-width: 320px;
+  }
 `;
 
 export const Title = styled.h2`
     margin-bottom: 24px;
+  @media (max-width: 768px) {
+    text-align: center;
+  }
 `;
 
 export const Actions = styled.div`
@@ -25,6 +33,10 @@ export const Actions = styled.div`
     align-items: center;
     justify-content: space-between;
     row-gap: 24px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export const CustomLink = styled(Link)`
@@ -35,4 +47,10 @@ export const CustomLink = styled(Link)`
     &:hover {
       text-decoration: underline;
     }
+`;
+
+export const StyledButtonLogin = styled(Button)`
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;

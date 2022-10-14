@@ -15,6 +15,11 @@ export const Back = styled.div`
   }
 `;
 
+export const WrapperLoading = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 export const TableInfo = styled.table`
     width: 100%;
   margin-top: 10px;
@@ -42,6 +47,18 @@ export const Actions = styled.div`
   display: flex;
   gap: 8px;
   margin: 12px 0;
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
+export const PortfolioActions = styled.div`
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 export const Cell = styled.th`
@@ -49,17 +66,36 @@ export const Cell = styled.th`
   border-width: 2px;
   width: 33%;
   padding: 12px;
+  @media (max-width: 768px) {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    width: 100%;
+    
+    &:before {
+      content: attr(data-label);
+      font-weight: bold;
+      margin-right: 20px;
+    }
+  }
 `;
 export const Head = styled.thead`
   font-weight: 400;
   height: 80px;
   background: grey;
   color: #fff;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 export const Body = styled.tbody`
   font-weight: normal;
 `;
 export const Tr = styled.tr`
+  @media (max-width: 768px) {
+    display: block;
+  }
 `;
 
 export const InfoBlock = styled.div`
@@ -82,14 +118,24 @@ export const WrapperStocks = styled.div`
   display: grid;
   grid-template-columns: minmax(200px, 400px) minmax(200px, 400px) minmax(200px, 400px);
   justify-content: center;
-  gap: 24px
+  gap: 24px;
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 export const WrapperBonds = styled.div`
   display: grid;
   grid-template-columns: minmax(200px, 400px) minmax(200px, 400px) minmax(200px, 400px);
   justify-content: center;
-  gap: 24px
+  gap: 24px;
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 

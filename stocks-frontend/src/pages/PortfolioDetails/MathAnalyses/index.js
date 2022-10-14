@@ -7,7 +7,7 @@ import {
     Wrapper,
     Body,
     Tr,
-    Bold, TableInfo, CellInfo, HeadInfo, WrapperChart, WrapperRisc, Description, BlockInfo
+    Bold, TableInfo, CellInfo, HeadInfo, WrapperChart, WrapperRisc, Description, BlockInfo, WrapperTable
 } from "./styles";
 import {getMathAnalysesAPI,
 } from "../../../api";
@@ -98,63 +98,65 @@ function MathAnalyses({stocks, bonds}) {
             <InfoBlock>
                 <Bold>Анализ на основе математической модели:</Bold>
             </InfoBlock>
-            <TableInfo>
-                <HeadInfo>
-                    <Tr>
-                        <CellInfo>
-                            Класс активов
-                        </CellInfo>
-                        <CellInfo color='#f5d142'>
-                            Осторожный
-                        </CellInfo>
-                        <CellInfo color='#5da377'>
-                            Консервативный
-                        </CellInfo>
-                        <CellInfo color='#5d86a3'>
-                            Умеренный
-                        </CellInfo>
-                        <CellInfo color='#b5555f'>
-                            Агрессивный
-                        </CellInfo>
-                    </Tr>
-                </HeadInfo>
-                <Body>
-                    <Tr>
-                        <CellInfo>
-                            Консервативная часть: облигации
-                        </CellInfo>
-                        <CellInfo>
-                            100%
-                        </CellInfo>
-                        <CellInfo>
-                            До 85%
-                        </CellInfo>
-                        <CellInfo>
-                            До 60%
-                        </CellInfo>
-                        <CellInfo>
-                            До 40-50%
-                        </CellInfo>
-                    </Tr>
-                    <Tr>
-                        <CellInfo>
-                            Рисковая часть: акции
-                        </CellInfo>
-                        <CellInfo>
-                            0%
-                        </CellInfo>
-                        <CellInfo>
-                            10-20%
-                        </CellInfo>
-                        <CellInfo>
-                            До 30%
-                        </CellInfo>
-                        <CellInfo>
-                            До 50-60%
-                        </CellInfo>
-                    </Tr>
-                </Body>
-            </TableInfo>
+            <WrapperTable>
+                <TableInfo>
+                    <HeadInfo>
+                        <Tr>
+                            <CellInfo>
+                                Класс активов
+                            </CellInfo>
+                            <CellInfo color='#f5d142'>
+                                Осторожный
+                            </CellInfo>
+                            <CellInfo color='#5da377'>
+                                Консервативный
+                            </CellInfo>
+                            <CellInfo color='#5d86a3'>
+                                Умеренный
+                            </CellInfo>
+                            <CellInfo color='#b5555f'>
+                                Агрессивный
+                            </CellInfo>
+                        </Tr>
+                    </HeadInfo>
+                    <Body>
+                        <Tr>
+                            <CellInfo>
+                                Консервативная часть: облигации
+                            </CellInfo>
+                            <CellInfo>
+                                100%
+                            </CellInfo>
+                            <CellInfo>
+                                До 85%
+                            </CellInfo>
+                            <CellInfo>
+                                До 60%
+                            </CellInfo>
+                            <CellInfo>
+                                До 40-50%
+                            </CellInfo>
+                        </Tr>
+                        <Tr>
+                            <CellInfo>
+                                Рисковая часть: акции
+                            </CellInfo>
+                            <CellInfo>
+                                0%
+                            </CellInfo>
+                            <CellInfo>
+                                10-20%
+                            </CellInfo>
+                            <CellInfo>
+                                До 30%
+                            </CellInfo>
+                            <CellInfo>
+                                До 50-60%
+                            </CellInfo>
+                        </Tr>
+                    </Body>
+                </TableInfo>
+            </WrapperTable>
             <WrapperRisc>
                 {(stocks?.length || bonds?.length) && (
                     <WrapperChart>

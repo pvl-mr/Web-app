@@ -7,6 +7,11 @@ export const Wrapper = styled.div`
     margin-bottom: 150px;
 `;
 
+export const WrapperLoading = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 export const NoData = styled.div`
   display: flex;
   justify-content: center;

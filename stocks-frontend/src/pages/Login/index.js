@@ -1,10 +1,10 @@
 import {useState} from "react";
 import { useNavigate } from "react-router-dom";
-import {Form, Button} from "react-bootstrap";
+import {Form} from "react-bootstrap";
 
-import {Actions, Content, CustomLink, Title, Wrapper} from "./styles";
+import {Actions, Content, CustomLink, StyledButtonLogin, Title, Wrapper} from "./styles";
 import paths from "../../constants/paths";
-import {LoginAPI, setBearerToken} from "../../api";
+import {LoginAPI} from "../../api";
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -42,9 +42,9 @@ function Login() {
                         <Form.Control type="password" placeholder="Пароль" onChange={(e) => setPassword(e.target.value)} />
                     </Form.Group>
                     <Actions>
-                        <Button variant="primary" type="submit" disabled={!email || !password || password?.length < 5}>
+                        <StyledButtonLogin variant="primary" type="submit" disabled={!email || !password || password?.length < 5}>
                             Войти
-                        </Button>
+                        </StyledButtonLogin>
                         <CustomLink to={paths.REGISTER}>
                             У меня нет аккаунта
                         </CustomLink>

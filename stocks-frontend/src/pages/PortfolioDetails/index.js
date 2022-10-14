@@ -15,22 +15,25 @@ import {
     Head,
     Body,
     Tr,
-    Bold, Back, Actions
+    Bold, Back, Actions, PortfolioActions,
+    WrapperLoading,
 } from "./styles";
 import paths from "../../constants/paths";
 import MathAnalyses from "./MathAnalyses";
 import {
-    deletePortfolioAPI, getMathAnalysesAPI,
+    deletePortfolioAPI,
     getPortfolioBondsDetailsAPI,
     getPortfolioDetailsAPI,
     getPortfolioStocksAPI, sendMessageAPI, sendPortfolioAPI, updatePortfolioAPI
 } from "../../api";
 import {numWord} from "../../helpers/numWord";
 import {Button} from "../Portfolios/styles";
+import Spinner from "react-bootstrap/Spinner";
 
 function PortfolioDetails() {
     const navigate = useNavigate();
     const [details, setDetails] = useState();
+    const [loading, setLoading] = useState(true);
     const [bonds, setBonds] = useState([]);
     const [stocks, setStocks] = useState([]);
     const [show, setShow] = useState(false);
@@ -47,6 +50,7 @@ function PortfolioDetails() {
     }, [id]);
 
     const getDetails = async () => {
+        setLoading(true);
         try {
             const { data: portfolio } = await getPortfolioDetailsAPI(id);
             setDetails(portfolio.data);
@@ -56,6 +60,8 @@ function PortfolioDetails() {
             setBonds(bonds.data);
         } catch (error) {
             console.log('error', error);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -144,6 +150,14 @@ function PortfolioDetails() {
         return '#D3D3D3';
     }
 
+    if (loading) {
+        return (
+            <WrapperLoading>
+                <Spinner animation="border" variant="primary" />
+            </WrapperLoading>
+        )
+    }
+
     return (
         <Wrapper>
             <Back onClick={goBack}><BsArrowLeft />Назад</Back>
@@ -163,29 +177,31 @@ function PortfolioDetails() {
                 </Head>
                 <Body>
                     <Tr>
-                        <Cell>
+                        <Cell data-label="ID">
                             {id}
                         </Cell>
-                        <Cell>
+                        <Cell data-label="Цель">
                             {details?.goal}
                         </Cell>
-                        <Cell>
+                        <Cell data-label="Срок в месяцах">
                             {details?.years} {numWord(Number(details?.years), ['месяц', 'месяца', 'месяцев'])}
                         </Cell>
                     </Tr>
                 </Body>
             </Table>
-            {isAnalyst ? (
-                <Actions>
-                    <Button onClick={handleAddAnalyses}>{details?.message ? 'Изменить анализ' : 'Добавить анализ'}</Button>
-                </Actions>
-            ) : (
-                <Actions>
-                    <Button onClick={() => handleUpdate(details)}>Изменить</Button>
-                    {!details?.sendstatus && <Button variant="success" onClick={sendPortfolio}>Отправить на анализ</Button>}
-                    <Button variant="outline-danger" onClick={() => deletePortfolio(details?.id)}>Удалить</Button>
-                </Actions>
-            )}
+            <PortfolioActions>
+                {isAnalyst ? (
+                    <Actions>
+                        <Button onClick={handleAddAnalyses}>{details?.message ? 'Изменить анализ' : 'Добавить анализ'}</Button>
+                    </Actions>
+                ) : (
+                    <Actions>
+                        <Button onClick={() => handleUpdate(details)}>Изменить</Button>
+                        {!details?.sendstatus && <Button variant="success" onClick={sendPortfolio}>Отправить на анализ</Button>}
+                        <Button variant="outline-danger" onClick={() => deletePortfolio(details?.id)}>Удалить</Button>
+                    </Actions>
+                )}
+            </PortfolioActions>
             {details?.message && <InfoBlock><Bold>Результаты анализа:</Bold> {details?.message}</InfoBlock>}
            <MathAnalyses stocks={stocks} bonds={bonds} />
 

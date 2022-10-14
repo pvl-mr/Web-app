@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {Form, Button} from "react-bootstrap";
-import {Actions, Content, CustomLink, Title, Wrapper} from "./styles";
+import {Form} from "react-bootstrap";
+import {Actions, ButtonRegister, Content, CustomLink, Title, Wrapper} from "./styles";
 import paths from "../../constants/paths";
 import {RegisterAPI} from "../../api";
 import {NotificationManager} from "react-notifications";
@@ -73,9 +73,9 @@ function Register() {
                         <Form.Control type="text" placeholder="Введите код аналитика" onChange={(e) => setCode(e.target.value)} />
                     </Form.Group>
                     <Actions>
-                        <Button variant="primary" type="submit" disabled={!firstName || !lastName || !email || !password || password.length < 6 || password !== confirmPassword }>
+                        <ButtonRegister variant="primary" type="submit" disabled={!firstName || !lastName || !email || !password || password.length < 6 || password !== confirmPassword }>
                             Зарегистрироваться
-                        </Button>
+                        </ButtonRegister>
                         <CustomLink to={paths.LOGIN}>
                             У меня уже есть аккаунт
                         </CustomLink>

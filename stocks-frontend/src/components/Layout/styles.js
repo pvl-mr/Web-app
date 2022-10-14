@@ -11,6 +11,11 @@ export const FooterWrapper = styled.footer`
   color: rgba(255, 255, 255, 0.55);
   display: flex;
   justify-content: space-between;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    text-align: center;
+  }
 `;
 
 export const Content = styled.main`
@@ -41,7 +46,15 @@ export const NavLink = styled(Link)`
 export const BlockCurrency = styled.div`
   display: flex;
   gap: 10px;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    margin-top: 50px;
+  }
 `;
 export const Currency = styled.div`
-    color: #fff
+    color: #fff;
+  @media (max-width: 768px) {
+    color: black;
+  }
 `;

@@ -11,6 +11,11 @@ export const WrapperRisc = styled.div`
   align-items: start;
   justify-content: space-around;
   margin: 24px 0;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const BlockInfo = styled.div`
@@ -28,10 +33,13 @@ export const WrapperChart = styled.div`
   width: 200px;
   height: 200px;
 `;
-
 export const TableInfo = styled.table`
-    width: 100%;
   margin-top: 10px;
+  width: 100%;
+`;
+
+export const WrapperTable = styled.div`
+  overflow: auto;
 `;
 
 export const CellInfo = styled.th`

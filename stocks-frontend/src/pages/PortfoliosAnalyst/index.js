@@ -1,5 +1,7 @@
 import {useEffect, useState} from "react";
 import {Form, Modal} from 'react-bootstrap';
+import {NotificationManager} from "react-notifications";
+import Spinner from "react-bootstrap/Spinner";
 
 import {
     Button,
@@ -8,7 +10,8 @@ import {
     Actions,
     BlockActions,
     EmptyButton,
-    NoData
+    NoData,
+    WrapperLoading
 } from "./styles";
 import {
     getPortfolioAnalystAPI,
@@ -17,7 +20,6 @@ import {
 import {numWord} from "../../helpers/numWord";
 import {generatePath, useNavigate} from "react-router-dom";
 import paths from "../../constants/paths";
-import {NotificationManager} from "react-notifications";
 
 function PortfoliosAnalyst() {
     const [portfolios, setPortfolios] = useState([]);
@@ -109,6 +111,14 @@ function PortfoliosAnalyst() {
             id: portfolioId,
         })
         navigate(path);
+    }
+
+    if (loading) {
+        return (
+            <WrapperLoading>
+                <Spinner animation="border" variant="primary" />
+            </WrapperLoading>
+        )
     }
 
     if (!loading && portfolios?.length === 0) {

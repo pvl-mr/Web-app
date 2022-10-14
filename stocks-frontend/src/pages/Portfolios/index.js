@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {Form, Modal} from 'react-bootstrap';
+import Spinner from 'react-bootstrap/Spinner';
 
 import {
     Button,
@@ -10,7 +11,7 @@ import {
     BlockActions,
     EmptyButton,
     DescriptionStatus,
-    Status
+    Status, WrapperLoading
 } from "./styles";
 import {createPortfolioAPI, deletePortfolioAPI, getPortfolioAPI, sendPortfolioAPI, updatePortfolioAPI} from "../../api";
 import {numWord} from "../../helpers/numWord";
@@ -123,6 +124,16 @@ function Portfolios() {
         }
 
         return '#D3D3D3';
+    }
+
+    if (loading) {
+        return (
+            <Wrapper>
+                <WrapperLoading>
+                    <Spinner animation="border" variant="primary" />
+                </WrapperLoading>
+            </Wrapper>
+        )
     }
 
     return (
